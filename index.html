@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NOVA — Skincare & Sun care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F1F2F4;--surface:#FFFFFF;--ink:#1B1D21;--muted:#61656C;--faint:#8E9299;
+  --line:#E3E5E9;--blue:#1B57C4;--deal:#C93A12;--deal-soft:#FDEDE7;--star:#F5A623;
+  --badge:#F0A020;--green:#1E7B34;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:#DCDEE2;color:var(--ink);line-height:1.5;font-size:15px;-webkit-font-smoothing:antialiased;}
+.app{max-width:520px;margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 60px rgba(0,0,0,.08);}
+
+/* header */
+.topbar{position:sticky;top:0;z-index:60;background:var(--surface);border-bottom:1px solid var(--line);}
+.topbar-main{display:flex;align-items:center;gap:10px;padding:10px 14px;}
+.logo{font-weight:700;font-size:19px;letter-spacing:-.02em;color:var(--blue);background:none;border:none;cursor:pointer;padding:2px;}
+.search{flex:1;display:flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;}
+.search svg{flex-shrink:0;color:var(--faint);}
+.search input{border:none;background:none;outline:none;font-family:var(--sans);font-size:14px;width:100%;}
+.ico{background:none;border:none;cursor:pointer;padding:6px;position:relative;color:var(--ink);display:flex;}
+.cbadge{position:absolute;top:0;right:-1px;background:var(--deal);color:#fff;font-size:10px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 4px;}
+.cbadge.on{display:flex;}
+.catnav{display:flex;gap:16px;padding:0 14px 9px;overflow-x:auto;scrollbar-width:none;}
+.catnav::-webkit-scrollbar{display:none;}
+.catnav button{background:none;border:none;font-family:var(--sans);font-size:13px;color:var(--muted);white-space:nowrap;cursor:pointer;padding:2px 0;}
+.catnav button.act{color:var(--ink);font-weight:600;border-bottom:2px solid var(--blue);}
+.crumbs{padding:9px 14px;font-size:12px;color:var(--faint);}
+.crumbs span{color:var(--muted);}
+.back{background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:5px;padding:4px 2px;}
+
+.view{display:none;}
+.view.on{display:block;}
+.card{background:var(--surface);margin-bottom:8px;padding:14px;}
+
+/* ---------- GALLERY (fixed sizing) ---------- */
+.gal{background:var(--surface);}
+.gal-main{position:relative;background:#FAFAFB;height:320px;padding:14px;}
+.gal-stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.gal-stage svg{width:100%;height:100%;display:block;}
+.gal-count{position:absolute;bottom:10px;right:12px;background:rgba(27,29,33,.62);color:#fff;font-size:11px;padding:3px 8px;border-radius:10px;}
+.thumbs{display:flex;gap:7px;padding:10px 14px 12px;overflow-x:auto;scrollbar-width:none;}
+.thumbs::-webkit-scrollbar{display:none;}
+.thumb-b{width:54px;height:54px;flex-shrink:0;border:1.5px solid var(--line);border-radius:5px;background:#FAFAFB;cursor:pointer;padding:4px;}
+.thumb-b.act{border-color:var(--blue);}
+.thumb-b svg{width:100%;height:100%;display:block;}
+
+/* badges */
+.bestseller{display:inline-flex;align-items:center;gap:5px;background:var(--badge);color:#fff;font-size:11px;font-weight:600;padding:3px 8px;border-radius:3px;margin-bottom:9px;}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 6px;border-radius:3px;}
+.tag.deal{background:var(--deal-soft);color:var(--deal);}
+
+/* product head */
+.brandlink{font-size:13px;color:var(--blue);font-weight:500;margin-bottom:3px;display:block;text-decoration:none;}
+h1{font-size:19px;font-weight:600;line-height:1.32;letter-spacing:-.01em;}
+.psize{font-size:13px;color:var(--muted);margin-top:3px;}
+.ratebar{display:flex;align-items:center;gap:7px;margin-top:9px;padding-bottom:12px;border-bottom:1px solid var(--line);}
+.stars{display:flex;gap:1px;}
+.stars svg{width:13px;height:13px;}
+.rlink{font-size:13px;color:var(--blue);cursor:pointer;}
+.rnum{font-size:13px;font-weight:600;}
+.pmain{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-top:12px;}
+.punit{font-size:12px;color:var(--faint);margin-top:2px;}
+.delivery{display:flex;align-items:flex-start;gap:7px;margin-top:11px;font-size:13px;color:var(--muted);}
+.delivery b{color:var(--ink);font-weight:600;}
+.delivery svg{flex-shrink:0;margin-top:2px;color:var(--green);}
+.seller{font-size:12.5px;color:var(--muted);margin-top:8px;}
+.seller a{color:var(--blue);text-decoration:none;}
+
+.btn{width:100%;font-family:var(--sans);font-size:15px;font-weight:600;padding:13px;border-radius:6px;border:none;cursor:pointer;transition:opacity .15s;}
+.btn:hover{opacity:.88;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn.secondary{background:var(--surface);color:var(--ink);border:1.5px solid var(--ink);}
+.btn.deal{background:var(--deal);color:#fff;}
+.btnstack{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+
+.sh{font-size:15.5px;font-weight:600;margin-bottom:11px;}
+.sh-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;}
+.sh-row h2{font-size:15.5px;font-weight:600;}
+.sh-row a{font-size:13px;color:var(--blue);text-decoration:none;}
+.body-txt{font-size:14px;color:var(--muted);}
+.feat{list-style:none;margin-top:10px;}
+.feat li{font-size:13.8px;color:var(--muted);padding-left:16px;position:relative;margin-bottom:7px;}
+.feat li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--blue);}
+
+/* bundle */
+.bundle{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
+.bcell{flex:1;text-align:center;}
+.bimg{height:86px;background:#FAFAFB;border:1px solid var(--line);border-radius:5px;padding:6px;}
+.bimg svg{width:100%;height:100%;display:block;}
+.bname{font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.3;}
+.bprice{font-size:12.5px;font-weight:600;margin-top:2px;}
+.bplus{font-size:19px;color:var(--faint);font-weight:300;}
+.bundle-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.bundle-price .old{font-size:13px;color:var(--faint);text-decoration:line-through;}
+.bundle-price .new{font-size:20px;font-weight:700;color:var(--deal);}
+.bundle-save{font-size:12px;color:var(--deal);font-weight:600;}
+
+/* rich content */
+.rich-panel{margin-bottom:16px;}
+.rich-img{width:100%;height:172px;border-radius:6px;overflow:hidden;background:#F7F8FA;}
+.rich-img svg{width:100%;height:100%;display:block;}
+.rich-cap{font-size:14px;font-weight:600;margin-top:9px;}
+.rich-txt{font-size:13.5px;color:var(--muted);margin-top:3px;}
+
+/* rails */
+.rail{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+.rail::-webkit-scrollbar{display:none;}
+.pcard{width:140px;flex-shrink:0;background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:9px;cursor:pointer;text-align:left;font-family:var(--sans);}
+.pcard:hover{border-color:var(--blue);}
+.pcard-img{height:100px;background:#FAFAFB;border-radius:4px;margin-bottom:8px;padding:5px;}
+.pcard-img svg{width:100%;height:100%;display:block;}
+.pcard-brand{font-size:10.5px;color:var(--faint);font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+.pcard-name{font-size:12.5px;line-height:1.32;margin-top:2px;height:33px;overflow:hidden;}
+.pcard-rate{display:flex;align-items:center;gap:3px;margin-top:5px;}
+.pcard-rate .stars svg{width:10px;height:10px;}
+.pcard-rate span{font-size:10.5px;color:var(--faint);}
+.pcard-price{font-size:14.5px;font-weight:700;margin-top:5px;}
+
+/* ad */
+.ad{position:relative;border-radius:8px;overflow:hidden;cursor:pointer;background:linear-gradient(115deg,#0E3A5C 0%,#1B6FA8 55%,#37A0C4 100%);padding:18px 16px;min-height:122px;display:flex;align-items:center;gap:10px;}
+.ad-label{position:absolute;top:7px;right:9px;font-size:10px;color:rgba(255,255,255,.72);background:rgba(0,0,0,.22);padding:2px 6px;border-radius:3px;}
+.ad-txt{flex:1;z-index:2;}
+.ad-brand{font-size:11px;font-weight:700;letter-spacing:.2em;color:rgba(255,255,255,.82);}
+.ad-head{font-size:18px;font-weight:700;color:#fff;line-height:1.25;margin-top:5px;}
+.ad-sub{font-size:12.5px;color:rgba(255,255,255,.85);margin-top:4px;}
+.ad-cta{display:inline-block;margin-top:10px;background:#fff;color:#0E3A5C;font-size:12px;font-weight:600;padding:6px 12px;border-radius:4px;}
+.ad-art{width:74px;height:100px;flex-shrink:0;z-index:2;}
+.ad-art svg{width:100%;height:100%;display:block;}
+
+/* store page */
+.store-hero{background:linear-gradient(135deg,#1B57C4 0%,#3D7BE0 100%);padding:18px 14px 16px;color:#fff;}
+.store-top{display:flex;align-items:center;gap:12px;}
+.store-mark{width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,.95);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:12px;
+  color:var(--blue);text-align:center;line-height:1.05;padding:3px;}
+.store-nm{flex:1;min-width:0;}
+.store-nm h2{font-size:17px;font-weight:700;line-height:1.25;}
+.store-meta{font-size:11.5px;color:rgba(255,255,255,.86);margin-top:3px;}
+.store-follow{background:#fff;color:var(--blue);border:none;border-radius:6px;padding:8px 14px;
+  font-family:var(--sans);font-size:12.5px;font-weight:600;cursor:pointer;flex-shrink:0;}
+.store-blurb{font-size:12.5px;color:rgba(255,255,255,.92);margin-top:11px;line-height:1.45;}
+.store-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sg-card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px;
+  cursor:pointer;font-family:var(--sans);text-align:left;}
+.sg-card:hover{border-color:var(--blue);}
+.sg-img{height:104px;background:#FAFAFB;border-radius:5px;padding:6px;}
+.sg-img svg{width:100%;height:100%;display:block;}
+.sg-nm{font-size:12.5px;line-height:1.3;margin-top:7px;height:33px;overflow:hidden;}
+.sg-rate{display:flex;align-items:center;gap:3px;margin-top:4px;}
+.sg-rate .stars svg{width:10px;height:10px;}
+.sg-rate span{font-size:10.5px;color:var(--faint);}
+.sg-price{font-size:14.5px;font-weight:700;margin-top:4px;}
+/* reviews */
+.revsum{display:flex;gap:18px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:6px;}
+.revbig{text-align:center;}
+.revbig .n{font-size:32px;font-weight:700;line-height:1;}
+.revbig .stars{justify-content:center;margin-top:5px;}
+.revbig .c{font-size:11.5px;color:var(--faint);margin-top:4px;white-space:nowrap;}
+.dist{flex:1;}
+.dist-row{display:flex;align-items:center;gap:7px;margin-bottom:3px;}
+.dist-row .lbl{font-size:11px;color:var(--muted);width:26px;}
+.dist-bar{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;}
+.dist-fill{height:100%;background:var(--star);}
+.dist-row .pct{font-size:11px;color:var(--faint);width:28px;text-align:right;}
+.rev{padding:13px 0;border-bottom:1px solid var(--line);}
+.rev:last-child{border-bottom:none;}
+.rev-top{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;}
+.rev-top .stars svg{width:11px;height:11px;}
+.rev-name{font-size:12.5px;font-weight:600;}
+.rev-ver{font-size:10.5px;color:var(--green);font-weight:500;}
+.rev-date{font-size:11.5px;color:var(--faint);margin-left:auto;}
+.rev-body{font-size:13.5px;color:var(--muted);}
+
+/* cart */
+.ptitle{font-size:20px;font-weight:600;margin-bottom:14px;}
+.li{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);}
+.li-img{width:66px;height:82px;flex-shrink:0;background:#FAFAFB;border:1px solid var(--line);border-radius:5px;padding:5px;}
+.li-img svg{width:100%;height:100%;display:block;}
+.li-b{flex:1;min-width:0;}
+.li-brand{font-size:10.5px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+.li-name{font-size:13.5px;font-weight:500;line-height:1.32;margin-top:1px;}
+.li-price{font-size:14.5px;font-weight:600;margin-top:5px;}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:5px;margin-top:7px;}
+.qty button{width:29px;height:29px;background:none;border:none;cursor:pointer;font-size:15px;}
+.qty span{min-width:28px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums;}
+.rm{background:none;border:none;cursor:pointer;font-size:12.5px;color:var(--faint);text-decoration:underline;padding:0;margin-top:8px;}
+.tot{display:flex;justify-content:space-between;font-size:13.5px;color:var(--muted);padding:5px 0;}
+.tot.grand{border-top:1px solid var(--line);margin-top:8px;padding-top:12px;font-size:16.5px;color:var(--ink);font-weight:700;}
+.empty{text-align:center;padding:60px 20px;}
+.empty p{color:var(--muted);margin-bottom:18px;}
+
+/* forms */
+.fs{margin-bottom:20px;}
+.fs h3{font-size:13px;font-weight:600;margin-bottom:10px;}
+.fld{margin-bottom:10px;}
+.fld label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px;}
+.fld input{width:100%;font-family:var(--sans);font-size:16px;padding:11px;border:1px solid var(--line);border-radius:5px;}
+.fld input:focus{outline:none;border-color:var(--blue);}
+.r2{display:flex;gap:10px;}
+.r2 .fld{flex:1;}
+
+.confirm{text-align:center;padding:56px 20px;}
+.ok{width:50px;height:50px;border-radius:50%;background:#E6F3E9;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+.confirm h2{font-size:22px;font-weight:600;margin-bottom:8px;}
+.confirm p{color:var(--muted);font-size:14px;}
+.ono{font-size:12.5px;color:var(--faint);margin-top:12px;}
+
+.sticky{position:sticky;bottom:0;z-index:50;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:9px;align-items:center;}
+.sticky .sp{flex-shrink:0;}
+.sticky .sp .v{font-size:17px;font-weight:700;line-height:1.1;}
+.sticky .sp .l{font-size:10.5px;color:var(--faint);}
+.sticky .btn{flex:1;}
+footer{padding:22px 14px 36px;text-align:center;}
+footer p{font-size:11.5px;color:var(--faint);}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="topbar-main">
+      <div id="hleft"><button class="logo" onclick="openPDP('sun')">nova</button></div>
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="Search products" aria-label="Search">
+      </div>
+      <button class="ico" onclick="go('cart')" aria-label="Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        <span class="cbadge" id="badge">0</span>
+      </button>
+    </div>
+    <div class="catnav">
+      <button>All</button><button class="act">Skincare</button><button>Sun care</button>
+      <button>Make-up</button><button>Hair</button><button>Fragrance</button><button>Deals</button>
+    </div>
+  </div>
+  <p class="crumbs" id="crumbs"></p>
+
+  <!-- ===== PDP (generic, filled by JS) ===== -->
+  <section class="view on" id="view-pdp">
+    <div class="gal">
+      <div class="gal-main"><div class="gal-stage" id="galMain"></div><span class="gal-count" id="galCount"></span></div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+    <div class="card" id="headCard"></div>
+    <div id="focalBundle"></div>
+    <div class="card" id="aboutCard"></div>
+    <div id="focalRich"></div>
+    <div id="focalRoutine"></div>
+    <div id="focalAd"></div>
+    <div class="card" id="recCard"></div>
+    <div class="card" id="revCard"></div>
+    <div class="sticky" id="stickyBar"></div>
+  </section>
+
+  <!-- ===== STORE ===== -->
+  <section class="view" id="view-store">
+    <div class="store-hero" id="storeHero"></div>
+    <div class="card" id="storeBody"></div>
+  </section>
+
+  <!-- ===== CART ===== -->
+  <section class="view" id="view-cart">
+    <div class="card" style="margin-top:8px;"><h2 class="ptitle">Shopping cart</h2><div id="cartBody"></div></div>
+  </section>
+
+  <!-- ===== CHECKOUT ===== -->
+  <section class="view" id="view-checkout">
+    <div class="card" style="margin-top:8px;">
+      <h2 class="ptitle">Checkout</h2>
+      <div id="coSummary" style="background:var(--bg);border-radius:6px;padding:12px;margin-bottom:18px;"></div>
+      <div class="fs"><h3>Contact</h3>
+        <div class="fld"><label for="e">Email</label><input id="e" type="email" placeholder="you@example.com"></div></div>
+      <div class="fs"><h3>Delivery address</h3>
+        <div class="r2"><div class="fld"><label for="fn">First name</label><input id="fn"></div>
+        <div class="fld"><label for="ln">Last name</label><input id="ln"></div></div>
+        <div class="fld"><label for="ad">Address</label><input id="ad"></div>
+        <div class="r2"><div class="fld"><label for="ct">City</label><input id="ct"></div>
+        <div class="fld"><label for="zp">Postal code</label><input id="zp" inputmode="numeric"></div></div></div>
+      <div class="fs"><h3>Payment</h3>
+        <div class="fld"><label for="cn">Card number</label><input id="cn" placeholder="0000 0000 0000 0000" inputmode="numeric"></div>
+        <div class="r2"><div class="fld"><label for="ex">Expiry</label><input id="ex" placeholder="MM / YY"></div>
+        <div class="fld"><label for="cv">CVC</label><input id="cv" placeholder="123" inputmode="numeric"></div></div></div>
+      <button class="btn primary" onclick="placeOrder()">Place order · <span id="coBtn"></span></button>
+      <p style="text-align:center;font-size:11.5px;color:var(--faint);margin-top:9px;">This is a demonstration store. No payment is taken.</p>
+    </div>
+  </section>
+
+  <!-- ===== CONFIRM ===== -->
+  <section class="view" id="view-confirm">
+    <div class="card" style="margin-top:8px;"><div class="confirm">
+      <div class="ok"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E7B34" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <h2>Order placed</h2><p>Thank you. A confirmation has been sent to your email.</p>
+      <p class="ono">Order NV-<span id="ono">48120</span></p>
+      <div style="margin-top:26px;"><button class="btn secondary" onclick="reset()">Continue shopping</button></div>
+    </div></div>
+  </section>
+
+  <footer><p>NOVA · Demonstration marketplace</p></footer>
+</div>
+
+<script>
+/* ================= ART ================= */
+function tube(cap,body,label,accent,txt,spf){
+  return '<svg viewBox="0 0 120 210" xmlns="http://www.w3.org/2000/svg">'+
+  '<ellipse cx="60" cy="203" rx="38" ry="4" fill="#1B1D21" opacity=".07"/>'+
+  '<rect x="42" y="6" width="36" height="26" rx="3" fill="'+cap+'"/>'+
+  '<rect x="46" y="30" width="28" height="5" rx="1.5" fill="'+cap+'" opacity=".78"/>'+
+  '<path d="M30 36 h60 a4 4 0 0 1 4 4 v150 a6 6 0 0 1 -6 6 h-56 a6 6 0 0 1 -6 -6 v-150 a4 4 0 0 1 4 -4 z" fill="'+body+'" stroke="#E0DDD7" stroke-width=".8"/>'+
+  '<rect x="30" y="36" width="7" height="160" fill="#fff" opacity=".5"/>'+
+  '<text x="60" y="88" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" letter-spacing="2.4" fill="'+txt+'">'+label+'</text>'+
+  '<line x1="46" y1="100" x2="74" y2="100" stroke="#DAD6CE" stroke-width="1"/>'+
+  '<text x="60" y="152" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="'+accent+'">'+(spf||'SPF50+')+'</text>'+
+  '</svg>';
+}
+function pump(body,cap,label,txt){
+  return '<svg viewBox="0 0 120 210">'+
+  '<ellipse cx="60" cy="203" rx="34" ry="4" fill="#1B1D21" opacity=".07"/>'+
+  '<rect x="52" y="4" width="16" height="16" rx="2" fill="'+cap+'"/><rect x="44" y="18" width="32" height="12" rx="2" fill="'+cap+'"/>'+
+  '<rect x="34" y="30" width="52" height="166" rx="8" fill="'+body+'" stroke="#E0DDD7" stroke-width=".8"/>'+
+  '<rect x="34" y="30" width="6" height="166" rx="3" fill="#fff" opacity=".5"/>'+
+  '<text x="60" y="104" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" letter-spacing="2.2" fill="'+txt+'">'+label+'</text>'+
+  '<line x1="46" y1="116" x2="74" y2="116" stroke="#DAD6CE" stroke-width="1"/></svg>';
+}
+function dropper(body,cap,label,txt){
+  return '<svg viewBox="0 0 120 210">'+
+  '<ellipse cx="60" cy="203" rx="32" ry="4" fill="#1B1D21" opacity=".07"/>'+
+  '<rect x="50" y="4" width="20" height="34" rx="3" fill="'+cap+'"/>'+
+  '<rect x="40" y="38" width="40" height="10" rx="2" fill="'+cap+'" opacity=".8"/>'+
+  '<rect x="38" y="48" width="44" height="148" rx="6" fill="'+body+'" stroke="#E0DDD7" stroke-width=".8"/>'+
+  '<rect x="38" y="48" width="6" height="148" rx="3" fill="#fff" opacity=".45"/>'+
+  '<text x="60" y="122" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" letter-spacing="2" fill="'+txt+'">'+label+'</text></svg>';
+}
+function jar(body,cap,label,txt){
+  return '<svg viewBox="0 0 120 210">'+
+  '<ellipse cx="60" cy="203" rx="40" ry="4" fill="#1B1D21" opacity=".07"/>'+
+  '<rect x="26" y="58" width="68" height="26" rx="4" fill="'+cap+'"/>'+
+  '<rect x="28" y="84" width="64" height="112" rx="8" fill="'+body+'" stroke="#E0DDD7" stroke-width=".8"/>'+
+  '<rect x="28" y="84" width="7" height="112" rx="3" fill="#fff" opacity=".5"/>'+
+  '<text x="60" y="146" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" letter-spacing="2.2" fill="'+txt+'">'+label+'</text></svg>';
+}
+/* generic scene art (parametrised so each product gets its own) */
+function texShot(bg,cream,stroke,label){
+  return '<svg viewBox="0 0 300 260">'+
+  '<rect width="300" height="260" fill="'+bg+'"/>'+
+  '<path d="M40 150 q30 -46 78 -34 q46 12 84 -6 q34 -16 58 10 q-14 46 -74 56 q-70 12 -104 -4 q-34 -16 -42 -22z" fill="'+cream+'" stroke="'+stroke+'" stroke-width="1.2"/>'+
+  '<path d="M62 146 q34 -30 74 -20" stroke="'+stroke+'" stroke-width="5" fill="none" stroke-linecap="round" opacity=".5"/>'+
+  '<path d="M96 168 q40 -18 78 -8" stroke="'+stroke+'" stroke-width="4" fill="none" stroke-linecap="round" opacity=".4"/>'+
+  '<circle cx="222" cy="94" r="19" fill="'+cream+'" stroke="'+stroke+'" stroke-width="1.2"/>'+
+  '<circle cx="216" cy="88" r="5" fill="#fff" opacity=".9"/>'+
+  '<text x="150" y="230" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#8E9299" letter-spacing="1.4">'+label+'</text></svg>';
+}
+function lifeShot(bg,sun,skin,hair,label){
+  return '<svg viewBox="0 0 300 260">'+
+  '<rect width="300" height="260" fill="'+bg+'"/>'+
+  '<circle cx="238" cy="52" r="30" fill="'+sun+'"/>'+
+  '<g stroke="'+sun+'" stroke-width="2.4" stroke-linecap="round" opacity=".75">'+
+  '<line x1="238" y1="6" x2="238" y2="14"/><line x1="238" y1="90" x2="238" y2="98"/>'+
+  '<line x1="192" y1="52" x2="200" y2="52"/><line x1="276" y1="52" x2="284" y2="52"/>'+
+  '<line x1="205" y1="19" x2="211" y2="25"/><line x1="265" y1="79" x2="271" y2="85"/>'+
+  '<line x1="271" y1="19" x2="265" y2="25"/><line x1="211" y1="79" x2="205" y2="85"/></g>'+
+  '<path d="M56 260 q0 -104 62 -108 q52 -4 58 44 q4 34 -14 46 q-8 6 -6 18" fill="'+skin+'"/>'+
+  '<path d="M58 260 q-4 -60 26 -84 q-6 40 20 52 q30 14 42 -12 q10 -22 -8 -40 q40 12 34 60 q-4 30 -22 24" fill="'+hair+'"/>'+
+  '<circle cx="150" cy="176" r="4" fill="#FCFAF6" opacity=".95"/>'+
+  '<circle cx="132" cy="164" r="3" fill="#FCFAF6" opacity=".95"/>'+
+  '<circle cx="146" cy="158" r="2.6" fill="#FCFAF6" opacity=".95"/>'+
+  '<text x="150" y="242" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6E8792" letter-spacing="1.4">'+label+'</text></svg>';
+}
+function ingShot(bg,leaf,leaf2,label){
+  return '<svg viewBox="0 0 300 260">'+
+  '<rect width="300" height="260" fill="'+bg+'"/>'+
+  '<circle cx="150" cy="118" r="62" fill="#fff" stroke="#E1E6DE" stroke-width="1.4"/>'+
+  '<path d="M150 72 q26 26 0 52 q-26 -26 0 -52z" fill="'+leaf+'"/>'+
+  '<path d="M118 126 q32 4 32 32 q-32 -4 -32 -32z" fill="'+leaf2+'"/>'+
+  '<path d="M182 126 q-32 4 -32 32 q32 -4 32 -32z" fill="'+leaf2+'"/>'+
+  '<circle cx="150" cy="118" r="6" fill="'+leaf+'"/>'+
+  '<text x="150" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#7A8A72" letter-spacing="1.4">'+label+'</text></svg>';
+}
+/* rich panels (focal only) */
+function richTones(){
+  return '<svg viewBox="0 0 340 172" preserveAspectRatio="xMidYMid slice">'+
+  '<rect width="340" height="172" fill="#FAF7F3"/>'+
+  ['#F0D5BC','#D9AE86','#B07F53','#7A5233'].map((c,i)=>
+    '<g><rect x="'+(24+i*78)+'" y="34" width="60" height="102" rx="8" fill="'+c+'"/>'+
+    '<path d="M'+(30+i*78)+' 96 q24 -16 48 -4" stroke="#FDFCFA" stroke-width="9" fill="none" stroke-linecap="round" opacity=".92"/></g>').join('')+
+  '<text x="170" y="160" text-anchor="middle" font-family="Inter,sans-serif" font-size="10.5" fill="#8E9299" letter-spacing="1.4">SWATCHED ON FOUR SKIN TONES</text></svg>';
+}
+function richAbsorb(){
+  return '<svg viewBox="0 0 340 172" preserveAspectRatio="xMidYMid slice">'+
+  '<rect width="340" height="172" fill="#F3F6F8"/>'+
+  '<g fill="none" stroke="#C7DAE6" stroke-width="1.6"><circle cx="170" cy="82" r="26"/><circle cx="170" cy="82" r="40"/><circle cx="170" cy="82" r="54"/><circle cx="170" cy="82" r="68"/></g>'+
+  '<circle cx="170" cy="82" r="17" fill="#FCFAF6" stroke="#E4EDF2" stroke-width="1.4"/>'+
+  '<circle cx="164" cy="76" r="4.5" fill="#fff"/>'+
+  '<text x="170" y="160" text-anchor="middle" font-family="Inter,sans-serif" font-size="10.5" fill="#7C94A3" letter-spacing="1.4">SINKS IN, NO RESIDUE</text></svg>';
+}
+function richFree(){
+  return '<svg viewBox="0 0 340 172" preserveAspectRatio="xMidYMid slice">'+
+  '<rect width="340" height="172" fill="#F2F5F1"/>'+
+  [['No perfume',60],['No alcohol',170],['No oils',280]].map(([t,x])=>
+    '<g><circle cx="'+x+'" cy="66" r="26" fill="#fff" stroke="#D8E2D4" stroke-width="1.4"/>'+
+    '<line x1="'+(x-11)+'" y1="55" x2="'+(x+11)+'" y2="77" stroke="#9BB18F" stroke-width="2.6" stroke-linecap="round"/>'+
+    '<line x1="'+(x+11)+'" y1="55" x2="'+(x-11)+'" y2="77" stroke="#9BB18F" stroke-width="2.6" stroke-linecap="round"/>'+
+    '<text x="'+x+'" y="114" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5F7357">'+t+'</text></g>').join('')+
+  '<text x="170" y="152" text-anchor="middle" font-family="Inter,sans-serif" font-size="10.5" fill="#7A8A72" letter-spacing="1.4">TESTED ON SENSITIVE SKIN</text></svg>';
+}
+function adArt(){
+  return '<svg viewBox="0 0 80 110">'+
+  '<rect x="24" y="4" width="32" height="14" rx="3" fill="#BFE3F2"/>'+
+  '<rect x="16" y="18" width="48" height="88" rx="9" fill="#EAF7FD" opacity=".95"/>'+
+  '<rect x="16" y="18" width="6" height="88" rx="3" fill="#fff" opacity=".6"/>'+
+  '<text x="40" y="68" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" letter-spacing="1.2" fill="#0E3A5C">AQUA</text></svg>';
+}
+
+/* ================= CATALOG ================= */
+const SOLA_REVIEWS = [
+  {n:"Maya R.",s:5,d:"2 weeks ago",t:"Light texture, no white cast at all. I've been using it every morning for two months and my skin looks calmer."},
+  {n:"Jen T.",s:5,d:"3 weeks ago",t:"Sits well under makeup and doesn't pill, which was my main problem with other sunscreens."},
+  {n:"Aisha K.",s:4,d:"1 month ago",t:"Good protection without the greasy feel. There's a faint scent at first but it fades quickly."},
+  {n:"Dilan A.",s:5,d:"1 month ago",t:"My skin is sensitive and reacts to most SPF products. This one hasn't caused any breakouts."},
+  {n:"Chris M.",s:5,d:"1 month ago",t:"Absorbs fast. I use it on my neck and ears too and the tube still lasts about six weeks."},
+  {n:"Sam W.",s:4,d:"2 months ago",t:"Does the job for daily wear. I'd like a bigger tube for the price, but I keep repurchasing."},
+  {n:"Noor E.",s:5,d:"2 months ago",t:"Finally a sunscreen I don't mind reapplying in the afternoon. No stinging around the eyes."},
+  {n:"Tobias L.",s:4,d:"3 months ago",t:"Fine for everyday use in the city. For a full beach day I'd still take something heavier."}
+];
+
+const P = {
+  sun:{ id:'sun', focal:true, brand:'SOLA', seller:'SOLA Official Store',
+    name:'SOLA Daily Face Sunscreen SPF 50+ — Lightweight Fluid, No White Cast',
+    short:'Daily Face Sunscreen SPF 50+', size:'50 ml · Broad-spectrum UVA/UVB',
+    price:14.99, unit:'€29.98 per 100 ml', rate:4.8, revs:50,
+    badge:'#1 Best Seller in Face Sunscreen',
+    art:()=>tube('#C8892F','#FDFCFA','SOLA','#C8892F','#232120'),
+    gallery:[ ()=>tube('#C8892F','#FDFCFA','SOLA','#C8892F','#232120'),
+              ()=>texShot('#F4F1EC','#FCFAF6','#E3DCD1','TEXTURE'),
+              ()=>lifeShot('#EAF1F4','#F6D79A','#E8C9AC','#3E3630','EVERY MORNING'),
+              ()=>ingShot('#F1F4F0','#BFD3B4','#D2E0C8','FRAGRANCE-FREE') ],
+    desc:'A lightweight daily sunscreen for the face. The fluid texture absorbs in seconds and leaves no white cast, so it works as the final step of a morning routine or under make-up. Fragrance-free and formulated for sensitive skin.',
+    feat:['Broad-spectrum SPF 50+ against UVA and UVB','Water-light fluid, absorbs in under 30 seconds','No white cast on any skin tone','Fragrance-free, alcohol-free, no essential oils'],
+    reviews:SOLA_REVIEWS, dist:[[5,84],[4,13],[3,2],[2,1],[1,0]] },
+
+  cleanser:{ id:'cleanser', brand:'SOLA', seller:'SOLA Official Store',
+    name:'SOLA Gentle Cleansing Gel — Low-Foam Daily Cleanser',
+    short:'Gentle Cleansing Gel', size:'150 ml', price:9.99, unit:'€6.66 per 100 ml', rate:4.6, revs:38,
+    art:()=>pump('#F4F7F5','#7FA894','SOLA','#3B4A42'),
+    gallery:[ ()=>pump('#F4F7F5','#7FA894','SOLA','#3B4A42'),
+              ()=>texShot('#EEF4F1','#FBFDFC','#D8E6DF','GEL TEXTURE') ],
+    desc:'A low-foam gel cleanser that removes sunscreen and make-up without stripping the skin barrier. Suitable for morning and evening use.',
+    feat:['Removes SPF and light make-up in one wash','pH-balanced, no sulphates','Leaves skin comfortable, not tight'],
+    reviews:[
+      {n:"Elif D.",s:5,d:"3 weeks ago",t:"Takes off sunscreen properly without needing a second cleanse."},
+      {n:"Marc B.",s:4,d:"1 month ago",t:"Very gentle. I'd prefer a bit more foam but my skin feels good after."},
+      {n:"Lea S.",s:5,d:"2 months ago",t:"No tightness afterwards, which is what I was looking for."}],
+    dist:[[5,72],[4,20],[3,6],[2,2],[1,0]] },
+
+  serum:{ id:'serum', brand:'SOLA', seller:'SOLA Official Store',
+    name:'SOLA Hydrating Serum — Hyaluronic Acid, Layering Formula',
+    short:'Hydrating Serum', size:'30 ml', price:19.99, unit:'€66.63 per 100 ml', rate:4.7, revs:64,
+    art:()=>dropper('#FBF3E9','#B98A52','SOLA','#5A4632'),
+    gallery:[ ()=>dropper('#FBF3E9','#B98A52','SOLA','#5A4632'),
+              ()=>texShot('#F8F2E9','#FDF9F2','#E8DCC9','SERUM TEXTURE') ],
+    desc:'A hyaluronic acid serum for the step before moisturiser. Layers cleanly under sunscreen without pilling.',
+    feat:['Three molecular weights of hyaluronic acid','Absorbs without tackiness','Layers under SPF and make-up'],
+    reviews:[
+      {n:"Priya N.",s:5,d:"2 weeks ago",t:"Layers perfectly under the SOLA sunscreen. No pilling at all."},
+      {n:"Tom K.",s:5,d:"1 month ago",t:"My skin holds moisture much better since I added this."},
+      {n:"Ana V.",s:4,d:"2 months ago",t:"Works well but the dropper can be messy."}],
+    dist:[[5,78],[4,17],[3,4],[2,1],[1,0]] },
+
+  cream:{ id:'cream', brand:'SOLA', seller:'SOLA Official Store',
+    name:'SOLA Daily Moisturiser — Light Gel-Cream',
+    short:'Daily Moisturiser', size:'50 ml', price:16.99, unit:'€33.98 per 100 ml', rate:4.5, revs:41,
+    art:()=>jar('#FAFAF7','#D8CFC0','SOLA','#4A453F'),
+    gallery:[ ()=>jar('#FAFAF7','#D8CFC0','SOLA','#4A453F'),
+              ()=>texShot('#F6F5F1','#FCFBF8','#E4E0D6','GEL-CREAM') ],
+    desc:'A light gel-cream that hydrates without weighing skin down. Suitable for morning and evening, under or over other steps.',
+    feat:['Gel-cream texture for normal to combination skin','Ceramides and glycerin','Non-comedogenic'],
+    reviews:[
+      {n:"Hannah W.",s:5,d:"1 month ago",t:"Light enough for summer but still hydrating."},
+      {n:"Deniz A.",s:4,d:"2 months ago",t:"Nice texture. I need something richer in winter."},
+      {n:"Rob F.",s:4,d:"3 months ago",t:"Absorbs fast, no shine. Good under sunscreen."}],
+    dist:[[5,66],[4,24],[3,7],[2,2],[1,1]] },
+
+  r1:{ id:'r1', brand:'DERMA+', seller:'DermaPlus Store',
+    name:'DERMA+ Mineral Sunscreen SPF 50 — 100% Zinc Oxide, Tinted',
+    short:'Mineral Sunscreen SPF 50', size:'40 ml · Mineral filter', price:22.50, unit:'€56.25 per 100 ml', rate:4.6, revs:312,
+    art:()=>tube('#3C6E9F','#F6F9FC','DERMA+','#3C6E9F','#24384A','SPF50'),
+    gallery:[ ()=>tube('#3C6E9F','#F6F9FC','DERMA+','#3C6E9F','#24384A','SPF50'),
+              ()=>texShot('#EAF0F5','#FBFCFD','#D5E0EA','THICK MINERAL TEXTURE'),
+              ()=>lifeShot('#E9EFF4','#EFD59A','#E3C4A6','#4A3F38','FOR REACTIVE SKIN') ],
+    desc:'A 100% mineral zinc oxide sunscreen developed for reactive and post-procedure skin. A light universal tint offsets the grey cast typical of mineral filters.',
+    feat:['100% mineral zinc oxide filter','Universal tint to reduce white cast','Fragrance-free, suitable after treatments','Water-resistant for 40 minutes'],
+    reviews:[
+      {n:"Clara H.",s:4,d:"1 week ago",t:"Great for my rosacea. Slight cast but it settles after a few minutes."},
+      {n:"Jonas P.",s:5,d:"3 weeks ago",t:"Thick but genuinely protective. I use it for hiking."},
+      {n:"Mira T.",s:5,d:"1 month ago",t:"No irritation around the eyes, which is rare for me."},
+      {n:"Owen L.",s:4,d:"2 months ago",t:"The tint helps, though it is too dark for very fair skin."}],
+    dist:[[5,70],[4,22],[3,5],[2,2],[1,1]] },
+
+  r2:{ id:'r2', brand:'KANSO', seller:'Kanso Europe',
+    name:'KANSO UV Fluid SPF 50+ — Watery Texture, Matte Finish',
+    short:'UV Fluid SPF 50+', size:'50 ml · PA++++', price:18.90, unit:'€37.80 per 100 ml', rate:4.7, revs:1204,
+    art:()=>tube('#2E2E30','#FFFFFF','KANSO','#2E2E30','#1B1D21'),
+    gallery:[ ()=>tube('#2E2E30','#FFFFFF','KANSO','#2E2E30','#1B1D21'),
+              ()=>texShot('#F4F4F5','#FCFCFD','#E2E2E4','WATERY FLUID'),
+              ()=>lifeShot('#EDEDEF','#F2D89C','#E8C9AC','#2B2723','MATTE ALL DAY') ],
+    desc:'A Japanese-style watery UV fluid that dries to a matte finish. Widely used as a make-up base for oily and combination skin.',
+    feat:['Watery fluid that disappears on application','Matte finish, controls shine','PA++++ UVA protection','Alcohol-based, quick-drying'],
+    reviews:[
+      {n:"Yuki M.",s:5,d:"5 days ago",t:"The most watery sunscreen I have tried. It disappears instantly."},
+      {n:"Sofia R.",s:5,d:"2 weeks ago",t:"Matte finish lasts all day on oily skin. Nothing else comes close."},
+      {n:"Ben C.",s:4,d:"1 month ago",t:"Slight alcohol smell at first but no stinging."},
+      {n:"Ines G.",s:5,d:"2 months ago",t:"Repurchased four times now. My default under make-up."}],
+    dist:[[5,79],[4,15],[3,4],[2,1],[1,1]] },
+
+  r3:{ id:'r3', brand:'BARESKIN', seller:'BareSkin Official',
+    name:'BARESKIN Invisible Shield SPF 50 — Everyday Clear Finish',
+    short:'Invisible Shield SPF 50', size:'50 ml', price:11.49, unit:'€22.98 per 100 ml', rate:4.3, revs:87,
+    art:()=>tube('#8E9299','#F7F7F8','BARE','#8E9299','#3A3D42','SPF50'),
+    gallery:[ ()=>tube('#8E9299','#F7F7F8','BARE','#8E9299','#3A3D42','SPF50'),
+              ()=>texShot('#F3F3F4','#FBFBFC','#E4E4E6','LIGHT LOTION') ],
+    desc:'An everyday sunscreen with a clear finish at an accessible price. Fragrance-free and suitable for daily use on face and body.',
+    feat:['Clear finish, no white cast','Fragrance-free','Large enough for face and neck daily'],
+    reviews:[
+      {n:"Kai B.",s:4,d:"2 weeks ago",t:"Does what it says for the price. Nothing special, nothing wrong."},
+      {n:"Lena F.",s:3,d:"1 month ago",t:"A bit sticky in humid weather."},
+      {n:"Arda Y.",s:5,d:"2 months ago",t:"Good value if you go through sunscreen quickly like I do."}],
+    dist:[[5,52],[4,30],[3,12],[2,4],[1,2]] },
+
+  r4:{ id:'r4', brand:'LUMIÈRE', seller:'Lumière Paris',
+    name:'LUMIÈRE Sun Serum SPF 50+ — Antioxidant Serum Texture',
+    short:'Sun Serum SPF 50+', size:'30 ml · with vitamin E', price:29.00, unit:'€96.67 per 100 ml', rate:4.9, revs:540,
+    art:()=>dropper('#FDF6E7','#C9A227','LUM','#6A5518'),
+    gallery:[ ()=>dropper('#FDF6E7','#C9A227','LUM','#6A5518'),
+              ()=>texShot('#FBF6EA','#FDFAF1','#EBDFC4','SERUM TEXTURE'),
+              ()=>lifeShot('#F6EFE2','#F0CE84','#EACBA8','#4A3A2A','GLOW FINISH') ],
+    desc:'A serum-textured sunscreen with vitamin E and antioxidants. A premium option for dry and mature skin, with a soft glow finish.',
+    feat:['Serum texture with antioxidant complex','Soft glow finish, works as a make-up base','Vitamin E and niacinamide','Dermatologically tested on dry skin'],
+    reviews:[
+      {n:"Camille D.",s:5,d:"1 week ago",t:"Expensive, but it feels like a serum rather than sunscreen."},
+      {n:"Fatima Z.",s:5,d:"3 weeks ago",t:"My dry skin drinks it up. Worth the price for me."},
+      {n:"Nils H.",s:5,d:"1 month ago",t:"Beautiful glow finish. I skip primer now."},
+      {n:"Greta O.",s:4,d:"2 months ago",t:"Only downside is the 30 ml size for this price."}],
+    dist:[[5,90],[4,8],[3,1],[2,1],[1,0]] },
+
+  aq1:{ id:'aq1', brand:'AQUAVEIL', seller:'Aquaveil Official Store',
+    name:'AQUAVEIL Ceramide Barrier Cream \u2014 Daily Moisture Repair',
+    short:'Ceramide Barrier Cream', size:'50 ml', price:12.90, unit:'\u20ac25.80 per 100 ml', rate:4.5, revs:156,
+    art:()=>jar('#EAF7FD','#7FC4E0','AQUA','#12506E'),
+    gallery:[ ()=>jar('#EAF7FD','#7FC4E0','AQUA','#12506E'),
+              ()=>texShot('#EDF6FA','#FBFDFE','#D6E8F0','CREAM TEXTURE') ],
+    desc:'A ceramide-rich cream for skin that feels tight, flaky or reactive. Formulated to rebuild the moisture barrier over time rather than only sitting on the surface.',
+    feat:['Three ceramides plus cholesterol and fatty acids','Fragrance-free and non-comedogenic','Suitable for use after retinol or exfoliation','Dermatologically tested on sensitive skin'],
+    reviews:[
+      {n:"Freya B.",s:5,d:"1 week ago",t:"My skin stopped stinging after cleansing within about a week of using this."},
+      {n:"Omar D.",s:4,d:"3 weeks ago",t:"Rich but not greasy. A bit heavy for summer on my oily areas."},
+      {n:"Julia K.",s:5,d:"1 month ago",t:"The only cream that has kept my winter flaking under control."}],
+    dist:[[5,66],[4,25],[3,6],[2,2],[1,1]] },
+
+  aq2:{ id:'aq2', brand:'AQUAVEIL', seller:'Aquaveil Official Store',
+    name:'AQUAVEIL Hydrating Toner \u2014 Alcohol-Free',
+    short:'Hydrating Toner', size:'200 ml', price:14.50, unit:'\u20ac7.25 per 100 ml', rate:4.4, revs:89,
+    art:()=>pump('#F2FAFD','#9FD3E8','AQUA','#1A5C7A'),
+    gallery:[ ()=>pump('#F2FAFD','#9FD3E8','AQUA','#1A5C7A') ],
+    desc:'A lightweight hydrating toner for the step after cleansing. No alcohol, no fragrance.',
+    feat:['Glycerin and panthenol','Alcohol-free and fragrance-free','Layers under serum and cream'],
+    reviews:[
+      {n:"Nadia S.",s:5,d:"2 weeks ago",t:"Absorbs immediately and my serum spreads better after it."},
+      {n:"Piotr M.",s:4,d:"1 month ago",t:"Does the job. Wish the bottle had a pump."}],
+    dist:[[5,60],[4,28],[3,8],[2,3],[1,1]] },
+
+  aq3:{ id:'aq3', brand:'AQUAVEIL', seller:'Aquaveil Official Store',
+    name:'AQUAVEIL Barrier Repair Serum \u2014 Niacinamide 5%',
+    short:'Barrier Repair Serum', size:'30 ml', price:19.90, unit:'\u20ac66.33 per 100 ml', rate:4.6, revs:203,
+    art:()=>dropper('#F0F9FC','#5FA8C6','AQUA','#12506E'),
+    gallery:[ ()=>dropper('#F0F9FC','#5FA8C6','AQUA','#12506E'),
+              ()=>texShot('#EEF7FB','#FAFDFE','#D4E7EF','SERUM TEXTURE') ],
+    desc:'A niacinamide serum aimed at redness and uneven texture, at a concentration low enough for daily use.',
+    feat:['5% niacinamide with zinc','Targets redness and enlarged pores','Layers under sunscreen without pilling'],
+    reviews:[
+      {n:"Alina R.",s:5,d:"1 week ago",t:"Redness around my nose is noticeably calmer after a month."},
+      {n:"Ben W.",s:5,d:"2 weeks ago",t:"No pilling under SPF, which was my problem with other niacinamide serums."},
+      {n:"Marta L.",s:4,d:"2 months ago",t:"Good but slow. Give it six weeks before judging."}],
+    dist:[[5,72],[4,20],[3,5],[2,2],[1,1]] }
+};
+
+/* ---------- brand / store metadata ---------- */
+const BRANDS = {
+  'SOLA':     {store:'SOLA Official Store',     rate:4.7, followers:'18.4k', since:'2019',
+               blurb:'Straightforward daily skincare. Fragrance-free formulas, no unnecessary steps.',
+               products:['sun','cleanser','serum','cream']},
+  'AQUAVEIL': {store:'Aquaveil Official Store', rate:4.5, followers:'9.2k',  since:'2021',
+               blurb:'Barrier-focused hydration for sensitive and reactive skin.',
+               products:['aq1','aq3','aq2']},
+  'DERMA+':   {store:'DermaPlus Store',         rate:4.6, followers:'24.1k', since:'2016',
+               blurb:'Mineral sun protection developed with dermatologists.',
+               products:['r1']},
+  'KANSO':    {store:'Kanso Europe',            rate:4.7, followers:'41.7k', since:'2018',
+               blurb:'Japanese-style UV care with a matte, weightless finish.',
+               products:['r2']},
+  'BARESKIN': {store:'BareSkin Official',       rate:4.3, followers:'6.8k',  since:'2020',
+               blurb:'Everyday essentials at an accessible price.',
+               products:['r3']},
+  'LUMI\u00c8RE': {store:'Lumi\u00e8re Paris',          rate:4.9, followers:'52.3k', since:'2011',
+               blurb:'Premium French skincare with antioxidant-led formulations.',
+               products:['r4']}
+};
+
+const SHIP=3.95, FREE_OVER=25, BUNDLE_PRICE=19.99;
+let cart={}, bundleOn=false, current='pdp', currentPid='sun', galIdx=0;
+let navStack=[], currentStore=null, suppressPush=false;
+
+/* ================= HELPERS ================= */
+function eur(v){ return '€'+v.toFixed(2); }
+function starRow(n){
+  let h='';
+  for(let i=1;i<=5;i++)
+    h+='<svg viewBox="0 0 24 24" fill="'+(i<=Math.round(n)?'#F5A623':'none')+'" stroke="#F5A623" stroke-width="1.7" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+  return h;
+}
+function itemCount(){ let n=0; for(const k in cart) n+=cart[k]; return n+(bundleOn?2:0); }
+function subtotal(){ let s=0; for(const k in cart) s+=P[k].price*cart[k]; if(bundleOn) s+=BUNDLE_PRICE; return s; }
+function shipCost(){ return itemCount()===0?0:(subtotal()>=FREE_OVER?0:SHIP); }
+function total(){ return subtotal()+shipCost(); }
+
+function pcard(id){
+  const p=P[id];
+  return '<button class="pcard" onclick="openPDP(\''+id+'\')">'+
+    '<div class="pcard-img">'+p.art()+'</div>'+
+    '<div class="pcard-brand">'+p.brand+'</div>'+
+    '<div class="pcard-name">'+p.short+'</div>'+
+    '<div class="pcard-rate"><span class="stars">'+starRow(p.rate)+'</span><span>'+p.rate+' ('+p.revs+')</span></div>'+
+    '<div class="pcard-price">'+eur(p.price)+'</div></button>';
+}
+
+/* ================= PDP RENDER ================= */
+function openPDP(id){ currentPid=id; galIdx=0; renderPDP(); go('pdp'); }
+
+function renderGallery(){
+  const p=P[currentPid];
+  document.getElementById('galMain').innerHTML=p.gallery[galIdx]();
+  document.getElementById('galCount').textContent=(galIdx+1)+' / '+p.gallery.length;
+  document.getElementById('thumbs').innerHTML=p.gallery.map((f,i)=>
+    '<button class="thumb-b'+(i===galIdx?' act':'')+'" onclick="setGal('+i+')" aria-label="Image '+(i+1)+'">'+f()+'</button>').join('');
+}
+function setGal(i){ galIdx=i; renderGallery(); }
+
+function renderPDP(){
+  const p=P[currentPid];
+  renderGallery();
+
+  document.getElementById('crumbs').innerHTML = p.focal
+    ? 'Skincare › Sun care › <span>Face sunscreen</span>'
+    : 'Skincare › '+p.brand+' › <span>'+p.short+'</span>';
+
+  /* head */
+  document.getElementById('headCard').innerHTML =
+    (p.badge ? '<span class="bestseller"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9.2 8.6 2 9.2l5.5 4.7L5.8 21 12 17.3 18.2 21l-1.7-7.1L22 9.2l-7.2-.6z"/></svg>'+p.badge+'</span>' : '')+
+    '<a class="brandlink" href="#" onclick="openStore(\''+p.brand+'\');return false;">'+p.seller+' \u203a</a>'+
+    '<h1>'+p.name+'</h1><p class="psize">'+p.size+'</p>'+
+    '<div class="ratebar"><span class="stars">'+starRow(p.rate)+'</span><span class="rnum">'+p.rate+'</span>'+
+      '<span class="rlink" onclick="jumpReviews()">'+p.revs+' reviews</span></div>'+
+    '<div class="pmain">'+eur(p.price)+'</div><div class="punit">'+p.unit+'</div>'+
+    '<div class="delivery"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'+
+      '<div>In stock · <b>Free delivery Thursday</b> on orders over €25</div></div>'+
+    '<p class="seller">Sold by <a href="#" onclick="return false;">'+p.seller+'</a> · Delivered by NOVA</p>'+
+    '<div class="btnstack">'+
+      '<button class="btn primary" onclick="add(\''+p.id+'\');go(\'cart\')">Add to cart</button>'+
+      '<button class="btn secondary" onclick="add(\''+p.id+'\');go(\'checkout\')">Buy now</button></div>';
+
+  /* bundle — focal only */
+  document.getElementById('focalBundle').innerHTML = p.focal ?
+    '<div class="card"><div class="sh-row"><h2>Frequently bought together</h2><span class="tag deal">Bundle</span></div>'+
+    '<div class="bundle">'+
+      '<div class="bcell"><div class="bimg">'+P.sun.art()+'</div><p class="bname">Daily Face Sunscreen SPF 50+</p><p class="bprice">€14.99</p></div>'+
+      '<span class="bplus">+</span>'+
+      '<div class="bcell"><div class="bimg">'+P.cleanser.art()+'</div><p class="bname">Gentle Cleansing Gel</p><p class="bprice">€9.99</p></div>'+
+    '</div>'+
+    '<div class="bundle-foot"><div class="bundle-price"><span class="old">€24.98</span><div class="new">€19.99</div>'+
+      '<span class="bundle-save">You save €4.99</span></div>'+
+      '<button class="btn deal" style="width:auto;padding:10px 16px;font-size:13.5px;" onclick="addBundle()">Add both to cart</button></div></div>' : '';
+
+  /* about + features */
+  document.getElementById('aboutCard').innerHTML =
+    '<h2 class="sh">About this product</h2><p class="body-txt">'+p.desc+'</p>'+
+    '<ul class="feat">'+p.feat.map(f=>'<li>'+f+'</li>').join('')+'</ul>';
+
+  /* rich content — focal only */
+  document.getElementById('focalRich').innerHTML = p.focal ?
+    '<div class="card"><h2 class="sh">Why people choose it</h2>'+
+    '<div class="rich-panel"><div class="rich-img">'+richTones()+'</div>'+
+      '<p class="rich-cap">Invisible on every skin tone</p>'+
+      '<p class="rich-txt">The fluid dries down clear instead of leaving the grey cast typical of mineral filters.</p></div>'+
+    '<div class="rich-panel"><div class="rich-img">'+richAbsorb()+'</div>'+
+      '<p class="rich-cap">Absorbs in under 30 seconds</p>'+
+      '<p class="rich-txt">A water-light texture that sinks in fast, so make-up goes on without pilling.</p></div>'+
+    '<div class="rich-panel" style="margin-bottom:0;"><div class="rich-img">'+richFree()+'</div>'+
+      '<p class="rich-cap">Fragrance-free formula</p>'+
+      '<p class="rich-txt">No added perfume, alcohol or essential oils. Tested on sensitive and reactive skin.</p></div></div>' : '';
+
+  /* routine — focal only */
+  document.getElementById('focalRoutine').innerHTML = p.focal ?
+    '<div class="card"><div class="sh-row"><h2>Complete the routine</h2><a href="#" onclick="openStore(\'SOLA\');return false;">Visit store \u203a</a></div>'+
+    '<p style="font-size:12.5px;color:var(--faint);margin:-6px 0 11px;">More from SOLA Official Store</p>'+
+    '<div class="rail">'+['cleanser','serum','cream'].map(pcard).join('')+'</div></div>' : '';
+
+  /* ad — focal only */
+  document.getElementById('focalAd').innerHTML = p.focal ?
+    '<div class="card"><div class="ad" onclick="openPDP(\'aq1\')"><span class="ad-label">Sponsored</span>'+
+    '<div class="ad-txt"><p class="ad-brand">AQUAVEIL</p><p class="ad-head">New hydration line<br>is here</p>'+
+    '<p class="ad-sub">Ceramide barrier care · from €12.90</p><span class="ad-cta">Shop the range</span></div>'+
+    '<div class="ad-art">'+adArt()+'</div></div></div>' : '';
+
+  /* recommendations — every product, excluding itself */
+  const recs = ['sun','r2','r1','r4','r3'].filter(x=>x!==p.id).slice(0,4);
+  document.getElementById('recCard').innerHTML =
+    '<div class="sh-row"><h2>Recommended for you</h2></div>'+
+    '<p style="font-size:12.5px;color:var(--faint);margin:-6px 0 11px;">Other sunscreens customers viewed</p>'+
+    '<div class="rail">'+recs.map(pcard).join('')+'</div>';
+
+  /* reviews */
+  document.getElementById('revCard').innerHTML =
+    '<h2 class="sh">Customer reviews</h2>'+
+    '<div class="revsum"><div class="revbig"><div class="n">'+p.rate+'</div>'+
+      '<div class="stars">'+starRow(p.rate)+'</div><div class="c">'+p.revs+' reviews</div></div>'+
+    '<div class="dist">'+p.dist.map(([s,pc])=>
+      '<div class="dist-row"><span class="lbl">'+s+'★</span><div class="dist-bar"><div class="dist-fill" style="width:'+pc+'%"></div></div><span class="pct">'+pc+'%</span></div>').join('')+
+    '</div></div>'+
+    '<div>'+p.reviews.map(r=>
+      '<div class="rev"><div class="rev-top"><span class="stars">'+starRow(r.s)+'</span>'+
+      '<span class="rev-name">'+r.n+'</span><span class="rev-ver">Verified purchase</span>'+
+      '<span class="rev-date">'+r.d+'</span></div><p class="rev-body">'+r.t+'</p></div>').join('')+'</div>';
+
+  /* sticky */
+  document.getElementById('stickyBar').innerHTML =
+    '<div class="sp"><div class="v">'+eur(p.price)+'</div><div class="l">Free del. over €25</div></div>'+
+    '<button class="btn primary" onclick="add(\''+p.id+'\');go(\'cart\')">Add to cart</button>';
+}
+
+/* ================= STORE ================= */
+function openStore(brand){
+  const b = BRANDS[brand];
+  if(!b) return;
+  currentStore = brand;
+  document.getElementById('storeHero').innerHTML =
+    '<div class="store-top">'+
+      '<div class="store-mark">'+brand+'</div>'+
+      '<div class="store-nm"><h2>'+b.store+'</h2>'+
+        '<div class="store-meta">\u2605 '+b.rate+' \u00b7 '+b.followers+' followers \u00b7 since '+b.since+'</div></div>'+
+      '<button class="store-follow" onclick="this.textContent=(this.textContent===\'Follow\'?\'Following\':\'Follow\')">Follow</button>'+
+    '</div>'+
+    '<p class="store-blurb">'+b.blurb+'</p>';
+  document.getElementById('storeBody').innerHTML =
+    '<div class="sh-row"><h2>All products</h2><span style="font-size:12.5px;color:var(--faint);">'+b.products.length+' items</span></div>'+
+    '<div class="store-grid">'+b.products.map(id=>{
+      const q=P[id];
+      return '<button class="sg-card" onclick="openPDP(\''+id+'\')">'+
+        '<div class="sg-img">'+q.art()+'</div>'+
+        '<div class="sg-nm">'+q.short+'</div>'+
+        '<div class="sg-rate"><span class="stars">'+starRow(q.rate)+'</span><span>'+q.rate+' ('+q.revs+')</span></div>'+
+        '<div class="sg-price">'+eur(q.price)+'</div></button>';
+    }).join('')+'</div>';
+  go('store');
+}
+
+/* ================= CART ================= */
+function renderBadge(){ const b=document.getElementById('badge'),n=itemCount(); b.textContent=n; b.classList.toggle('on',n>0); }
+function add(id){ cart[id]=(cart[id]||0)+1; renderBadge(); }
+function setQty(id,n){ if(n<=0) delete cart[id]; else cart[id]=Math.min(9,n); renderBadge(); renderCart(); if(itemCount()===0&&current==='checkout') go('cart'); }
+function addBundle(){ bundleOn=true; renderBadge(); go('cart'); }
+
+function renderCart(){
+  const el=document.getElementById('cartBody');
+  if(itemCount()===0){
+    el.innerHTML='<div class="empty"><p>Your cart is empty.</p><button class="btn secondary" onclick="openPDP(\'sun\')">Continue shopping</button></div>';
+    return;
+  }
+  let h='';
+  if(bundleOn){
+    h+='<div class="li"><div class="li-img">'+P.sun.art()+'</div><div class="li-b">'+
+      '<div class="li-brand">SOLA · Bundle</div><div class="li-name">Daily Face Sunscreen + Gentle Cleansing Gel</div>'+
+      '<div class="li-price">'+eur(BUNDLE_PRICE)+' <span style="font-size:12px;color:var(--faint);text-decoration:line-through;font-weight:400;">€24.98</span></div>'+
+      '<button class="rm" onclick="bundleOn=false;renderBadge();renderCart();">Remove</button></div></div>';
+  }
+  for(const id in cart){
+    const p=P[id],q=cart[id];
+    h+='<div class="li"><div class="li-img">'+p.art()+'</div><div class="li-b">'+
+      '<div class="li-brand">'+p.brand+'</div><div class="li-name">'+p.short+'</div>'+
+      '<div class="li-price">'+eur(p.price)+'</div>'+
+      '<div class="qty"><button onclick="setQty(\''+id+'\','+(q-1)+')">−</button><span>'+q+'</span><button onclick="setQty(\''+id+'\','+(q+1)+')">+</button></div><br>'+
+      '<button class="rm" onclick="setQty(\''+id+'\',0)">Remove</button></div></div>';
+  }
+  h+='<div style="margin-top:16px;">'+
+    '<div class="tot"><span>Subtotal</span><span>'+eur(subtotal())+'</span></div>'+
+    '<div class="tot"><span>Delivery</span><span>'+(shipCost()===0?'Free':eur(shipCost()))+'</span></div>'+
+    '<div class="tot grand"><span>Total</span><span>'+eur(total())+'</span></div></div>'+
+    '<div style="margin-top:18px;display:flex;flex-direction:column;gap:8px;">'+
+    '<button class="btn primary" onclick="go(\'checkout\')">Proceed to checkout</button>'+
+    '<button class="btn secondary" onclick="openPDP(\'sun\')">Continue shopping</button></div>';
+  el.innerHTML=h;
+}
+
+function renderCheckout(){
+  let rows='';
+  if(bundleOn) rows+='<div class="tot"><span>Sunscreen + Cleansing Gel bundle</span><span>'+eur(BUNDLE_PRICE)+'</span></div>';
+  for(const id in cart) rows+='<div class="tot"><span>'+P[id].short+' × '+cart[id]+'</span><span>'+eur(P[id].price*cart[id])+'</span></div>';
+  rows+='<div class="tot"><span>Delivery</span><span>'+(shipCost()===0?'Free':eur(shipCost()))+'</span></div>';
+  rows+='<div class="tot grand"><span>Total</span><span>'+eur(total())+'</span></div>';
+  document.getElementById('coSummary').innerHTML=rows;
+  document.getElementById('coBtn').textContent=eur(total());
+}
+
+/* ================= NAV ================= */
+function go(v){
+  if(!suppressPush && current && current!==v) navStack.push({view:current, pid:currentPid, store:currentStore});
+  suppressPush=false;
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  document.getElementById('view-'+v).classList.add('on');
+  current=v;
+  renderHeader();
+  if(v==='cart') renderCart();
+  if(v==='checkout') renderCheckout();
+  window.scrollTo({top:0,behavior:'instant'});
+  try{ history.pushState({app:1}, ''); }catch(e){}
+}
+
+function renderHeader(){
+  const left=document.getElementById('hleft');
+  const onFocal = (current==='pdp' && currentPid==='sun');
+  if(onFocal || current==='confirm'){
+    left.innerHTML='<button class="logo" onclick="home()">nova</button>';
+  } else {
+    left.innerHTML='<button class="back" onclick="goBack()">'+
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>Back</button>';
+  }
+  const cr=document.getElementById('crumbs');
+  if(current==='pdp'){
+    const p=P[currentPid];
+    cr.innerHTML = p.focal ? 'Skincare \u203a Sun care \u203a <span>Face sunscreen</span>'
+                           : 'Skincare \u203a '+p.brand+' \u203a <span>'+p.short+'</span>';
+  } else if(current==='store'){
+    cr.innerHTML = 'Skincare \u203a <span>'+(BRANDS[currentStore]? BRANDS[currentStore].store : '')+'</span>';
+  } else { cr.innerHTML=''; }
+}
+
+function goBack(){
+  const prev = navStack.pop();
+  suppressPush = true;
+  if(!prev){ currentPid='sun'; galIdx=0; renderPDP(); go('pdp'); return; }
+  if(prev.view==='pdp'){ currentPid=prev.pid; galIdx=0; renderPDP(); go('pdp'); }
+  else if(prev.view==='store'){ const b=prev.store; navStack.pop(); openStore(b); }
+  else { go(prev.view); }
+}
+
+function home(){
+  navStack=[]; suppressPush=true; currentPid='sun'; galIdx=0; renderPDP(); go('pdp');
+}
+
+/* device / browser back stays inside the prototype */
+window.addEventListener('popstate', function(){
+  try{ history.pushState({app:1}, ''); }catch(e){}
+  if(current==='pdp' && currentPid==='sun' && navStack.length===0) return;
+  goBack();
+});
+
+function jumpReviews(){ document.getElementById('revCard').scrollIntoView({behavior:'smooth'}); }
+function placeOrder(){
+  document.getElementById('ono').textContent=48000+Math.floor(Math.random()*900);
+  cart={};bundleOn=false;renderBadge();go('confirm');
+}
+function reset(){
+  cart={};bundleOn=false;renderBadge();
+  document.querySelectorAll('.fld input').forEach(i=>i.value='');
+  home();
+}
+
+renderPDP(); renderBadge(); renderHeader();
+try{ history.pushState({app:1}, ''); }catch(e){}
+</script>
+
+<!-- ============================================================
+     QUALTRICS BEHAVIOURAL TRACKING
+     Sends interaction data to the parent page via postMessage.
+     Harmless if the prototype is opened outside Qualtrics.
+     ============================================================ -->
+<script>
+(function(){
+  var T = {
+    condition: "marketplace",
+    seconds_on_page: 0,
+    added_to_cart: 0,
+    reached_cart: 0,
+    reached_checkout: 0,
+    completed_order: 0,
+    items_in_cart: 0,
+    cart_value: 0,
+    products_viewed: 0,
+    product_list: "",
+    clicks: 0,
+    max_scroll: 0,
+    time_to_first_click: "",
+    time_to_add: "",
+    order_value: 0,
+    order_items: 0,
+    store_visits: 0,
+    store_list: ""
+  };
+  var seen = [];
+  var seenStores = [];
+  var start = Date.now();
+  function secs(){ return Math.round((Date.now()-start)/1000); }
+
+  function snapshot(){
+    try{
+      T.items_in_cart = (typeof itemCount === "function") ? itemCount()
+                        : (typeof qty !== "undefined" ? qty : 0);
+      T.cart_value = (typeof total === "function") ? Number(total().toFixed(2)) : 0;
+    }catch(e){}
+    T.seconds_on_page = secs();
+    T.product_list = seen.join("|");
+    T.store_list = seenStores.join("|");
+  }
+  function send(){
+    snapshot();
+    try{ window.parent.postMessage({source:"shopPrototype", data:T}, "*"); }catch(e){}
+  }
+  function wrap(name, after){
+    if(typeof window[name] !== "function") return;
+    var orig = window[name];
+    window[name] = function(){
+      var r = orig.apply(this, arguments);
+      try{ after.apply(null, arguments); }catch(e){}
+      send();
+      return r;
+    };
+  }
+  function markAdd(){
+    T.added_to_cart = 1;
+    if(T.time_to_add === "") T.time_to_add = secs();
+  }
+  function markView(id){
+    if(id && seen.indexOf(id) < 0){ seen.push(id); T.products_viewed = seen.length; }
+  }
+
+  wrap("add", function(id){ markAdd(); });
+  wrap("addToCart", function(){ markAdd(); });
+  wrap("addBundle", function(){ markAdd(); });
+  // capture basket BEFORE placeOrder clears it
+  if(typeof window.placeOrder === "function"){
+    var _po = window.placeOrder;
+    window.placeOrder = function(){
+      try{
+        T.order_value = (typeof total === "function") ? Number(total().toFixed(2)) : 0;
+        T.order_items = (typeof itemCount === "function") ? itemCount()
+                        : (typeof qty !== "undefined" ? qty : 0);
+      }catch(e){}
+      var r = _po.apply(this, arguments);
+      T.completed_order = 1;
+      send();
+      return r;
+    };
+  }
+  wrap("openPDP", function(id){ markView(id); });
+  wrap("openStore", function(brand){
+    if(brand && seenStores.indexOf(brand) < 0){ seenStores.push(brand); T.store_visits = seenStores.length; }
+  });
+  wrap("openSheet", function(id){ markView(id); });
+  wrap("setQty", function(){});
+  wrap("go", function(v){
+    if(v === "cart") T.reached_cart = 1;
+    if(v === "checkout") T.reached_checkout = 1;
+  });
+
+  document.addEventListener("click", function(){
+    T.clicks++;
+    if(T.time_to_first_click === "") T.time_to_first_click = secs();
+  }, true);
+
+  function scrollDepth(el){
+    var h = (el === window)
+      ? (document.body.scrollHeight - window.innerHeight)
+      : (el.scrollHeight - el.clientHeight);
+    var pos = (el === window) ? window.scrollY : el.scrollTop;
+    if(h > 0){
+      var d = Math.min(100, Math.round(pos / h * 100));
+      if(d > T.max_scroll) T.max_scroll = d;
+    }
+  }
+  window.addEventListener("scroll", function(){ scrollDepth(window); }, {passive:true});
+  document.addEventListener("scroll", function(e){
+    var el = e.target;
+    if(el && el.classList && (el.classList.contains("sheet") || el.classList.contains("app"))) scrollDepth(el);
+  }, true);
+
+  setInterval(send, 5000);
+  window.addEventListener("beforeunload", send);
+  window.addEventListener("pagehide", send);
+  send();
+})();
+</script>
+
+</body>
+</html>

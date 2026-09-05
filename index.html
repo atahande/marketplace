@@ -45,13 +45,15 @@ body{font-family:var(--sans);background:#DCDEE2;color:var(--ink);line-height:1.5
 .gal{background:var(--surface);}
 .gal-main{position:relative;background:#FAFAFB;height:320px;padding:14px;}
 .gal-stage{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
-.gal-stage svg{width:100%;height:100%;display:block;}
+.gal-stage svg,.gal-stage img{width:100%;height:100%;display:block;}
+.gal-stage img{object-fit:contain;}
 .gal-count{position:absolute;bottom:10px;right:12px;background:rgba(27,29,33,.62);color:#fff;font-size:11px;padding:3px 8px;border-radius:10px;}
 .thumbs{display:flex;gap:7px;padding:10px 14px 12px;overflow-x:auto;scrollbar-width:none;}
 .thumbs::-webkit-scrollbar{display:none;}
 .thumb-b{width:54px;height:54px;flex-shrink:0;border:1.5px solid var(--line);border-radius:5px;background:#FAFAFB;cursor:pointer;padding:4px;}
 .thumb-b.act{border-color:var(--blue);}
-.thumb-b svg{width:100%;height:100%;display:block;}
+.thumb-b svg,.thumb-b img{width:100%;height:100%;display:block;}
+.thumb-b img{object-fit:contain;}
 
 /* badges */
 .bestseller{display:inline-flex;align-items:center;gap:5px;background:var(--badge);color:#fff;font-size:11px;font-weight:600;padding:3px 8px;border-radius:3px;margin-bottom:9px;}
@@ -109,7 +111,8 @@ h1{font-size:19px;font-weight:600;line-height:1.32;letter-spacing:-.01em;}
 /* rich content */
 .rich-panel{margin-bottom:16px;}
 .rich-img{width:100%;height:172px;border-radius:6px;overflow:hidden;background:#F7F8FA;}
-.rich-img svg{width:100%;height:100%;display:block;}
+.rich-img svg,.rich-img img{width:100%;height:100%;display:block;}
+.rich-img img{object-fit:cover;}
 .rich-cap{font-size:14px;font-weight:600;margin-top:9px;}
 .rich-txt{font-size:13.5px;color:var(--muted);margin-top:3px;}
 
@@ -119,7 +122,8 @@ h1{font-size:19px;font-weight:600;line-height:1.32;letter-spacing:-.01em;}
 .pcard{width:140px;flex-shrink:0;background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:9px;cursor:pointer;text-align:left;font-family:var(--sans);}
 .pcard:hover{border-color:var(--blue);}
 .pcard-img{height:100px;background:#FAFAFB;border-radius:4px;margin-bottom:8px;padding:5px;}
-.pcard-img svg{width:100%;height:100%;display:block;}
+.pcard-img svg,.pcard-img img{width:100%;height:100%;display:block;}
+.pcard-img img{object-fit:contain;}
 .pcard-brand{font-size:10.5px;color:var(--faint);font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
 .pcard-name{font-size:12.5px;line-height:1.32;margin-top:2px;height:33px;overflow:hidden;}
 .pcard-rate{display:flex;align-items:center;gap:3px;margin-top:5px;}
@@ -155,7 +159,8 @@ h1{font-size:19px;font-weight:600;line-height:1.32;letter-spacing:-.01em;}
   cursor:pointer;font-family:var(--sans);text-align:left;}
 .sg-card:hover{border-color:var(--blue);}
 .sg-img{height:104px;background:#FAFAFB;border-radius:5px;padding:6px;}
-.sg-img svg{width:100%;height:100%;display:block;}
+.sg-img svg,.sg-img img{width:100%;height:100%;display:block;}
+.sg-img img{object-fit:contain;}
 .sg-nm{font-size:12.5px;line-height:1.3;margin-top:7px;height:33px;overflow:hidden;}
 .sg-rate{display:flex;align-items:center;gap:3px;margin-top:4px;}
 .sg-rate .stars svg{width:10px;height:10px;}
@@ -186,7 +191,8 @@ h1{font-size:19px;font-weight:600;line-height:1.32;letter-spacing:-.01em;}
 .ptitle{font-size:20px;font-weight:600;margin-bottom:14px;}
 .li{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);}
 .li-img{width:66px;height:82px;flex-shrink:0;background:#FAFAFB;border:1px solid var(--line);border-radius:5px;padding:5px;}
-.li-img svg{width:100%;height:100%;display:block;}
+.li-img svg,.li-img img{width:100%;height:100%;display:block;}
+.li-img img{object-fit:contain;}
 .li-b{flex:1;min-width:0;}
 .li-brand{font-size:10.5px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
 .li-name{font-size:13.5px;font-weight:500;line-height:1.32;margin-top:1px;}
@@ -424,6 +430,12 @@ function adArt(){
   '<text x="40" y="68" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="700" letter-spacing="1.2" fill="#0E3A5C">AQUA</text></svg>';
 }
 
+/* ================= PRODUCT IMAGES ================= */
+const IMAGE_DIR = 'images/';
+function productImg(file, alt){
+  return '<img src="'+IMAGE_DIR+file+'" alt="'+(alt||'Product image')+'" loading="lazy">';
+}
+
 /* ================= CATALOG ================= */
 const SOLA_REVIEWS = [
   {n:"Maya R.",s:5,d:"2 weeks ago",t:"Light texture, no white cast at all. I've been using it every morning for two months and my skin looks calmer."},
@@ -442,11 +454,8 @@ const P = {
     short:'Daily Face Sunscreen SPF 50+', size:'50 ml · Broad-spectrum UVA/UVB',
     price:14.99, unit:'€29.98 per 100 ml', rate:4.8, revs:50,
     badge:'#1 Best Seller in Face Sunscreen',
-    art:()=>tube('#C8892F','#FDFCFA','SOLA','#C8892F','#232120'),
-    gallery:[ ()=>tube('#C8892F','#FDFCFA','SOLA','#C8892F','#232120'),
-              ()=>texShot('#F4F1EC','#FCFAF6','#E3DCD1','TEXTURE'),
-              ()=>lifeShot('#EAF1F4','#F6D79A','#E8C9AC','#3E3630','EVERY MORNING'),
-              ()=>ingShot('#F1F4F0','#BFD3B4','#D2E0C8','FRAGRANCE-FREE') ],
+    art:()=>productImg('sola-sun.png','SOLA Daily Face Sunscreen SPF 50+'),
+    gallery:[ ()=>productImg('sola-sun.png','SOLA Daily Face Sunscreen SPF 50+') ],
     desc:'A lightweight daily sunscreen for the face. The fluid texture absorbs in seconds and leaves no white cast, so it works as the final step of a morning routine or under make-up. Fragrance-free and formulated for sensitive skin.',
     feat:['Broad-spectrum SPF 50+ against UVA and UVB','Water-light fluid, absorbs in under 30 seconds','No white cast on any skin tone','Fragrance-free, alcohol-free, no essential oils'],
     reviews:SOLA_REVIEWS, dist:[[5,84],[4,13],[3,2],[2,1],[1,0]] },
@@ -454,9 +463,8 @@ const P = {
   cleanser:{ id:'cleanser', brand:'SOLA', seller:'SOLA Official Store',
     name:'SOLA Gentle Cleansing Gel — Low-Foam Daily Cleanser',
     short:'Gentle Cleansing Gel', size:'150 ml', price:9.99, unit:'€6.66 per 100 ml', rate:4.6, revs:38,
-    art:()=>pump('#F4F7F5','#7FA894','SOLA','#3B4A42'),
-    gallery:[ ()=>pump('#F4F7F5','#7FA894','SOLA','#3B4A42'),
-              ()=>texShot('#EEF4F1','#FBFDFC','#D8E6DF','GEL TEXTURE') ],
+    art:()=>productImg('sola-clean.png','SOLA Gentle Cleansing Gel'),
+    gallery:[ ()=>productImg('sola-clean.png','SOLA Gentle Cleansing Gel') ],
     desc:'A low-foam gel cleanser that removes sunscreen and make-up without stripping the skin barrier. Suitable for morning and evening use.',
     feat:['Removes SPF and light make-up in one wash','pH-balanced, no sulphates','Leaves skin comfortable, not tight'],
     reviews:[
@@ -468,9 +476,8 @@ const P = {
   serum:{ id:'serum', brand:'SOLA', seller:'SOLA Official Store',
     name:'SOLA Hydrating Serum — Hyaluronic Acid, Layering Formula',
     short:'Hydrating Serum', size:'30 ml', price:19.99, unit:'€66.63 per 100 ml', rate:4.7, revs:64,
-    art:()=>dropper('#FBF3E9','#B98A52','SOLA','#5A4632'),
-    gallery:[ ()=>dropper('#FBF3E9','#B98A52','SOLA','#5A4632'),
-              ()=>texShot('#F8F2E9','#FDF9F2','#E8DCC9','SERUM TEXTURE') ],
+    art:()=>productImg('sola-serum.png','SOLA Hydrating Serum'),
+    gallery:[ ()=>productImg('sola-serum.png','SOLA Hydrating Serum') ],
     desc:'A hyaluronic acid serum for the step before moisturiser. Layers cleanly under sunscreen without pilling.',
     feat:['Three molecular weights of hyaluronic acid','Absorbs without tackiness','Layers under SPF and make-up'],
     reviews:[
@@ -482,9 +489,8 @@ const P = {
   cream:{ id:'cream', brand:'SOLA', seller:'SOLA Official Store',
     name:'SOLA Daily Moisturiser — Light Gel-Cream',
     short:'Daily Moisturiser', size:'50 ml', price:16.99, unit:'€33.98 per 100 ml', rate:4.5, revs:41,
-    art:()=>jar('#FAFAF7','#D8CFC0','SOLA','#4A453F'),
-    gallery:[ ()=>jar('#FAFAF7','#D8CFC0','SOLA','#4A453F'),
-              ()=>texShot('#F6F5F1','#FCFBF8','#E4E0D6','GEL-CREAM') ],
+    art:()=>productImg('sola-moister.png','SOLA Daily Moisturiser'),
+    gallery:[ ()=>productImg('sola-moister.png','SOLA Daily Moisturiser') ],
     desc:'A light gel-cream that hydrates without weighing skin down. Suitable for morning and evening, under or over other steps.',
     feat:['Gel-cream texture for normal to combination skin','Ceramides and glycerin','Non-comedogenic'],
     reviews:[
@@ -496,10 +502,8 @@ const P = {
   r1:{ id:'r1', brand:'DERMA+', seller:'DermaPlus Store',
     name:'DERMA+ Mineral Sunscreen SPF 50 — 100% Zinc Oxide, Tinted',
     short:'Mineral Sunscreen SPF 50', size:'40 ml · Mineral filter', price:22.50, unit:'€56.25 per 100 ml', rate:4.6, revs:312,
-    art:()=>tube('#3C6E9F','#F6F9FC','DERMA+','#3C6E9F','#24384A','SPF50'),
-    gallery:[ ()=>tube('#3C6E9F','#F6F9FC','DERMA+','#3C6E9F','#24384A','SPF50'),
-              ()=>texShot('#EAF0F5','#FBFCFD','#D5E0EA','THICK MINERAL TEXTURE'),
-              ()=>lifeShot('#E9EFF4','#EFD59A','#E3C4A6','#4A3F38','FOR REACTIVE SKIN') ],
+    art:()=>productImg('derma-sun.png','DERMA+ Mineral Sunscreen SPF 50'),
+    gallery:[ ()=>productImg('derma-sun.png','DERMA+ Mineral Sunscreen SPF 50') ],
     desc:'A 100% mineral zinc oxide sunscreen developed for reactive and post-procedure skin. A light universal tint offsets the grey cast typical of mineral filters.',
     feat:['100% mineral zinc oxide filter','Universal tint to reduce white cast','Fragrance-free, suitable after treatments','Water-resistant for 40 minutes'],
     reviews:[
@@ -512,10 +516,8 @@ const P = {
   r2:{ id:'r2', brand:'KANSO', seller:'Kanso Europe',
     name:'KANSO UV Fluid SPF 50+ — Watery Texture, Matte Finish',
     short:'UV Fluid SPF 50+', size:'50 ml · PA++++', price:18.90, unit:'€37.80 per 100 ml', rate:4.7, revs:1204,
-    art:()=>tube('#2E2E30','#FFFFFF','KANSO','#2E2E30','#1B1D21'),
-    gallery:[ ()=>tube('#2E2E30','#FFFFFF','KANSO','#2E2E30','#1B1D21'),
-              ()=>texShot('#F4F4F5','#FCFCFD','#E2E2E4','WATERY FLUID'),
-              ()=>lifeShot('#EDEDEF','#F2D89C','#E8C9AC','#2B2723','MATTE ALL DAY') ],
+    art:()=>productImg('kanso-sun.png','KANSO UV Fluid SPF 50+'),
+    gallery:[ ()=>productImg('kanso-sun.png','KANSO UV Fluid SPF 50+') ],
     desc:'A Japanese-style watery UV fluid that dries to a matte finish. Widely used as a make-up base for oily and combination skin.',
     feat:['Watery fluid that disappears on application','Matte finish, controls shine','PA++++ UVA protection','Alcohol-based, quick-drying'],
     reviews:[
@@ -528,9 +530,8 @@ const P = {
   r3:{ id:'r3', brand:'BARESKIN', seller:'BareSkin Official',
     name:'BARESKIN Invisible Shield SPF 50 — Everyday Clear Finish',
     short:'Invisible Shield SPF 50', size:'50 ml', price:11.49, unit:'€22.98 per 100 ml', rate:4.3, revs:87,
-    art:()=>tube('#8E9299','#F7F7F8','BARE','#8E9299','#3A3D42','SPF50'),
-    gallery:[ ()=>tube('#8E9299','#F7F7F8','BARE','#8E9299','#3A3D42','SPF50'),
-              ()=>texShot('#F3F3F4','#FBFBFC','#E4E4E6','LIGHT LOTION') ],
+    art:()=>productImg('bareskin-sun.png','BARESKIN Invisible Shield SPF 50'),
+    gallery:[ ()=>productImg('bareskin-sun.png','BARESKIN Invisible Shield SPF 50') ],
     desc:'An everyday sunscreen with a clear finish at an accessible price. Fragrance-free and suitable for daily use on face and body.',
     feat:['Clear finish, no white cast','Fragrance-free','Large enough for face and neck daily'],
     reviews:[
@@ -542,10 +543,8 @@ const P = {
   r4:{ id:'r4', brand:'LUMIÈRE', seller:'Lumière Paris',
     name:'LUMIÈRE Sun Serum SPF 50+ — Antioxidant Serum Texture',
     short:'Sun Serum SPF 50+', size:'30 ml · with vitamin E', price:29.00, unit:'€96.67 per 100 ml', rate:4.9, revs:540,
-    art:()=>dropper('#FDF6E7','#C9A227','LUM','#6A5518'),
-    gallery:[ ()=>dropper('#FDF6E7','#C9A227','LUM','#6A5518'),
-              ()=>texShot('#FBF6EA','#FDFAF1','#EBDFC4','SERUM TEXTURE'),
-              ()=>lifeShot('#F6EFE2','#F0CE84','#EACBA8','#4A3A2A','GLOW FINISH') ],
+    art:()=>productImg('lumiere-sun.png','LUMIÈRE Sun Serum SPF 50+'),
+    gallery:[ ()=>productImg('lumiere-sun.png','LUMIÈRE Sun Serum SPF 50+') ],
     desc:'A serum-textured sunscreen with vitamin E and antioxidants. A premium option for dry and mature skin, with a soft glow finish.',
     feat:['Serum texture with antioxidant complex','Soft glow finish, works as a make-up base','Vitamin E and niacinamide','Dermatologically tested on dry skin'],
     reviews:[
@@ -558,9 +557,8 @@ const P = {
   aq1:{ id:'aq1', brand:'AQUAVEIL', seller:'Aquaveil Official Store',
     name:'AQUAVEIL Ceramide Barrier Cream \u2014 Daily Moisture Repair',
     short:'Ceramide Barrier Cream', size:'50 ml', price:12.90, unit:'\u20ac25.80 per 100 ml', rate:4.5, revs:156,
-    art:()=>jar('#EAF7FD','#7FC4E0','AQUA','#12506E'),
-    gallery:[ ()=>jar('#EAF7FD','#7FC4E0','AQUA','#12506E'),
-              ()=>texShot('#EDF6FA','#FBFDFE','#D6E8F0','CREAM TEXTURE') ],
+    art:()=>productImg('aquaveil-cream.png','AQUAVEIL Ceramide Barrier Cream'),
+    gallery:[ ()=>productImg('aquaveil-cream.png','AQUAVEIL Ceramide Barrier Cream') ],
     desc:'A ceramide-rich cream for skin that feels tight, flaky or reactive. Formulated to rebuild the moisture barrier over time rather than only sitting on the surface.',
     feat:['Three ceramides plus cholesterol and fatty acids','Fragrance-free and non-comedogenic','Suitable for use after retinol or exfoliation','Dermatologically tested on sensitive skin'],
     reviews:[
@@ -572,8 +570,8 @@ const P = {
   aq2:{ id:'aq2', brand:'AQUAVEIL', seller:'Aquaveil Official Store',
     name:'AQUAVEIL Hydrating Toner \u2014 Alcohol-Free',
     short:'Hydrating Toner', size:'200 ml', price:14.50, unit:'\u20ac7.25 per 100 ml', rate:4.4, revs:89,
-    art:()=>pump('#F2FAFD','#9FD3E8','AQUA','#1A5C7A'),
-    gallery:[ ()=>pump('#F2FAFD','#9FD3E8','AQUA','#1A5C7A') ],
+    art:()=>productImg('aquaveil-toner.png','AQUAVEIL Hydrating Toner'),
+    gallery:[ ()=>productImg('aquaveil-toner.png','AQUAVEIL Hydrating Toner') ],
     desc:'A lightweight hydrating toner for the step after cleansing. No alcohol, no fragrance.',
     feat:['Glycerin and panthenol','Alcohol-free and fragrance-free','Layers under serum and cream'],
     reviews:[
@@ -584,9 +582,8 @@ const P = {
   aq3:{ id:'aq3', brand:'AQUAVEIL', seller:'Aquaveil Official Store',
     name:'AQUAVEIL Barrier Repair Serum \u2014 Niacinamide 5%',
     short:'Barrier Repair Serum', size:'30 ml', price:19.90, unit:'\u20ac66.33 per 100 ml', rate:4.6, revs:203,
-    art:()=>dropper('#F0F9FC','#5FA8C6','AQUA','#12506E'),
-    gallery:[ ()=>dropper('#F0F9FC','#5FA8C6','AQUA','#12506E'),
-              ()=>texShot('#EEF7FB','#FAFDFE','#D4E7EF','SERUM TEXTURE') ],
+    art:()=>productImg('aquaveil-serum.png','AQUAVEIL Barrier Repair Serum'),
+    gallery:[ ()=>productImg('aquaveil-serum.png','AQUAVEIL Barrier Repair Serum') ],
     desc:'A niacinamide serum aimed at redness and uneven texture, at a concentration low enough for daily use.',
     feat:['5% niacinamide with zinc','Targets redness and enlarged pores','Layers under sunscreen without pilling'],
     reviews:[
@@ -700,13 +697,13 @@ function renderPDP(){
   /* rich content — focal only */
   document.getElementById('focalRich').innerHTML = p.focal ?
     '<div class="card"><h2 class="sh">Why people choose it</h2>'+
-    '<div class="rich-panel"><div class="rich-img">'+richTones()+'</div>'+
+    '<div class="rich-panel"><div class="rich-img"><img src="images/rich-1.jpeg" alt="Invisible on every skin tone" loading="lazy"></div>'+
       '<p class="rich-cap">Invisible on every skin tone</p>'+
       '<p class="rich-txt">The fluid dries down clear instead of leaving the grey cast typical of mineral filters.</p></div>'+
-    '<div class="rich-panel"><div class="rich-img">'+richAbsorb()+'</div>'+
+    '<div class="rich-panel"><div class="rich-img"><img src="images/rich-2.jpeg" alt="Absorbs in under 30 seconds" loading="lazy"></div>'+
       '<p class="rich-cap">Absorbs in under 30 seconds</p>'+
       '<p class="rich-txt">A water-light texture that sinks in fast, so make-up goes on without pilling.</p></div>'+
-    '<div class="rich-panel" style="margin-bottom:0;"><div class="rich-img">'+richFree()+'</div>'+
+    '<div class="rich-panel" style="margin-bottom:0;"><div class="rich-img"><img src="images/rich-3.jpeg" alt="Fragrance-free formula" loading="lazy"></div>'+
       '<p class="rich-cap">Fragrance-free formula</p>'+
       '<p class="rich-txt">No added perfume, alcohol or essential oils. Tested on sensitive and reactive skin.</p></div></div>' : '';
 
